@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumable Tracking System - BEMAL Laboratory</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- HEADER & NAVIGATION -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <h2>🏭 CTS - BEMAL Lab</h2>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" onclick="showPage('dashboard')">Dashboard</a></li>
+                    <li><a href="#" onclick="showPage('users')">Users</a></li>
+                    <li><a href="#" onclick="showPage('consumables')">Consumables</a></li>
+                    <li><a href="#" onclick="showPage('usage')">Usage Tracking</a></li>
+                    <li><a href="#" onclick="showPage('categories')">Categories</a></li>
+                    <li><a href="#" onclick="showPage('suppliers')">Suppliers</a></li>
+                    <li><a href="#" onclick="showPage('requests')">Requests</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <span id="userDisplay" style="color: #666; margin-right: 15px;"></span>
+                    <button class="btn-logout" id="logoutBtn" style="display:none;" onclick="logout()">Logout</button>
+                    <button class="btn-login" id="loginBtn" onclick="showPage('login')">Login</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <div class="hero-section">
+            <h1>Consumable Tracking System</h1>
+            <p>Amara Raja Energy & Mobility Ltd - BEMAL Laboratory</p>
+            <p class="subtitle">Efficient Management of Laboratory Consumables</p>
+            <button class="btn-primary" onclick="showPage('login')">Get Started</button>
+        </div>
+
+        <div class="features-section">
+            <h2>System Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3>Track Consumables</h3>
+                    <p>Real-time monitoring of all lab consumables with stock levels</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏷️</div>
+                    <h3>Categories</h3>
+                    <p>Organize consumables by type for easy management</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚚</div>
+                    <h3>Suppliers</h3>
+                    <p>Manage vendor information and procurement</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Requests</h3>
+                    <p>Create and track consumable requests with approval</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚠️</div>
+                    <h3>Low Stock Alerts</h3>
+                    <p>Automatic notifications for low inventory levels</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Analytics</h3>
+                    <p>Track consumption patterns and optimize spending</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN PAGE -->
+    <div id="login" class="page">
+        <div class="auth-container">
+            <div class="auth-form">
+                <h2>Login to CTS</h2>
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="loginEmail" required placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" id="loginPassword" required placeholder="Enter password">
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">Login</button>
+                </form>
+
+                <div class="demo-box">
+                    <h4>📌 Demo Credentials:</h4>
+                    <p><strong>Admin:</strong> admin@cts.com / admin123</p>
+                    <p><strong>Manager:</strong> manager@cts.com / manager123</p>
+                    <p><strong>Staff:</strong> staff@cts.com / staff123</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD PAGE -->
+    <div id="dashboard" class="page">
+        <div class="container">
+            <h1>Dashboard</h1>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Consumables</h3>
+                    <div class="stat-number" id="totalConsumables">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Low Stock</h3>
+                    <div class="stat-number" id="lowStockCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Requests</h3>
+                    <div class="stat-number" id="totalRequests">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Suppliers</h3>
+                    <div class="stat-number" id="totalSuppliers">0</div>
+                </div>
+            </div>
+
+            <div class="dashboard-cards">
+                <div class="card">
+                    <h3>📦 Consumables</h3>
+                    <p>Manage and track all laboratory consumables</p>
+                    <button class="btn-secondary" onclick="showPage('consumables')">View Consumables</button>
+                </div>
+                <div class="card">
+                    <h3>🏷️ Categories</h3>
+                    <p>Organize consumables into categories</p>
+                    <button class="btn-secondary" onclick="showPage('categories')">View Categories</button>
+                </div>
+                <div class="card">
+                    <h3>🚚 Suppliers</h3>
+                    <p>Manage supplier information</p>
+                    <button class="btn-secondary" onclick="showPage('suppliers')">View Suppliers</button>
+                </div>
+                <div class="card">
+                    <h3>📋 Requests</h3>
+                    <p>Create and track requests</p>
+                    <button class="btn-secondary" onclick="showPage('requests')">View Requests</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONSUMABLES PAGE -->
+    <div id="consumables" class="page">
+        <div class="container">
+            <div class="page-header">
+                <h1>Consumables</h1>
+                <button class="btn-primary" onclick="openModal('consumableModal')">+ Add Consumable</button>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Stock</th>
+                        <th>Min Level</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="consumablesTable">
+                    <tr><td colspan="8" class="no-data">No consumables found</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Add Consumable Modal -->
+        <div id="consumableModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Add Consumable</h2>
+                    <button class="close-btn" onclick="closeModal('consumableModal')">&times;</button>
+                </div>
+                <form onsubmit="addConsumable(event)">
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input type="text" id="consName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Category:</label>
+                        <select id="consCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="Office Supplies">Office Supplies</option>
+                            <option value="Safety Equipment">Safety Equipment</option>
+                            <option value="Lab Equipment">Lab Equipment</option>
+                            <option value="Cleaning">Cleaning</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Stock Level:</label>
+                        <input type="number" id="consStock" required min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Minimum Level:</label>
+                        <input type="number" id="consMinLevel" required min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Unit Price:</label>
+                        <input type="number" id="consPrice" required step="0.01" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Unit:</label>
+                        <select id="consUnit" required>
+                            <option value="boxes">Boxes</option>
+                            <option value="bottles">Bottles</option>
+                            <option value="pieces">Pieces</option>
+                            <option value="kg">KG</option>
+                            <option value="liters">Liters</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">Add Consumable</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- CATEGORIES PAGE -->
+    <div id="categories" class="page">
+        <div class="container">
+            <div class="page-header">
+                <h1>Categories</h1>
+                <button class="btn-primary" onclick="openModal('categoryModal')">+ Add Category</button>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Items Count</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="categoriesTable">
+                    <tr><td colspan="4" class="no-data">No categories found</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Add Category Modal -->
+        <div id="categoryModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Add Category</h2>
+                    <button class="close-btn" onclick="closeModal('categoryModal')">&times;</button>
+                </div>
+                <form onsubmit="addCategory(event)">
+                    <div class="form-group">
+                        <label>Category Name:</label>
+                        <input type="text" id="catName" required>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">Add Category</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUPPLIERS PAGE -->
+    <div id="suppliers" class="page">
+        <div class="container">
+            <div class="page-header">
+                <h1>Suppliers</h1>
+                <button class="btn-primary" onclick="openModal('supplierModal')">+ Add Supplier</button>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Contact</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="suppliersTable">
+                    <tr><td colspan="6" class="no-data">No suppliers found</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Add Supplier Modal -->
+        <div id="supplierModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Add Supplier</h2>
+                    <button class="close-btn" onclick="closeModal('supplierModal')">&times;</button>
+                </div>
+                <form onsubmit="addSupplier(event)">
+                    <div class="form-group">
+                        <label>Supplier Name:</label>
+                        <input type="text" id="supName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Person:</label>
+                        <input type="text" id="supContact" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="supEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone:</label>
+                        <input type="tel" id="supPhone" required>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">Add Supplier</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- REQUESTS PAGE -->
+    <div id="requests" class="page">
+        <div class="container">
+            <div class="page-header">
+                <h1>Consumable Requests</h1>
+                <button class="btn-primary" onclick="openModal('requestModal')">+ Create Request</button>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Consumable</th>
+                        <th>Quantity</th>
+                        <th>Requested By</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="requestsTable">
+                    <tr><td colspan="7" class="no-data">No requests found</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Create Request Modal -->
+        <div id="requestModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Create Request</h2>
+                    <button class="close-btn" onclick="closeModal('requestModal')">&times;</button>
+                </div>
+                <form onsubmit="addRequest(event)">
+                    <div class="form-group">
+                        <label>Consumable:</label>
+                        <select id="reqConsumable" required>
+                            <option value="">Select Consumable</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantity:</label>
+                        <input type="number" id="reqQuantity" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Notes:</label>
+                        <textarea id="reqNotes" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">Create Request</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- USAGE TRACKING PAGE -->
+    <div id="usage" class="page">
+        <div class="container">
+            <div class="page-header">
+                <h1>🔍 Usage Tracking & Traceability</h1>
+                <button class="btn-primary" onclick="openModal('usageModal')">+ Record Usage</button>
+            </div>
+
+            <!-- SUMMARY STATS -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Usage Records</h3>
+                    <div class="stat-number" id="totalUsageRecords">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>This Month</h3>
+                    <div class="stat-number" id="thisMonthUsage">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Users</h3>
+                    <div class="stat-number" id="activeUsers">0</div>
+                </div>
+            </div>
+
+            <!-- USAGE HISTORY TABLE -->
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">📋 Consumption History</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Consumable</th>
+                        <th>Quantity Used</th>
+                        <th>Used By</th>
+                        <th>Purpose</th>
+                        <th>Department</th>
+                        <th>Remaining Stock</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="usageTable">
+                    <tr><td colspan="8" class="no-data">No usage records found</td></tr>
+                </tbody>
+            </table>
+
+            <!-- USER CONSUMPTION ANALYSIS -->
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">👤 User-wise Consumption Summary</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>User Name</th>
+                        <th>Department</th>
+                        <th>Total Items Used</th>
+                        <th>Usage Count</th>
+                        <th>Last Used</th>
+                        <th>View Details</th>
+                    </tr>
+                </thead>
+                <tbody id="userConsumptionTable">
+                    <tr><td colspan="6" class="no-data">No user consumption data</td></tr>
+                </tbody>
+            </table>
+
+            <!-- CONSUMABLE USAGE ANALYSIS -->
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">📦 Consumable-wise Usage Analysis</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Consumable Name</th>
+                        <th>Total Used</th>
+                        <th>Usage Frequency</th>
+                        <th>Last Used By</th>
+                        <th>Last Used Date</th>
+                        <th>View History</th>
+                    </tr>
+                </thead>
+                <tbody id="consumableUsageTable">
+                    <tr><td colspan="6" class="no-data">No consumable usage data</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Record Usage Modal -->
+        <div id="usageModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>📝 Record Consumable Usage</h2>
+                    <button class="close-btn" onclick="closeModal('usageModal')">&times;</button>
+                </div>
+                <form onsubmit="recordUsage(event)">
+                    <div class="form-group">
+                        <label>Consumable Used:</label>
+                        <select id="usageConsumable" required>
+                            <option value="">Select Consumable</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantity Used:</label>
+                        <input type="number" id="usageQuantity" required min="0.01" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Department:</label>
+                        <select id="usageDepartment" required>
+                            <option value="">Select Department</option>
+                            <option value="Research & Development">Research & Development</option>
+                            <option value="Testing">Testing</option>
+                            <option value="Quality Control">Quality Control</option>
+                            <option value="Operations">Operations</option>
+                            <option value="Maintenance">Maintenance</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Purpose of Usage:</label>
+                        <textarea id="usagePurpose" required placeholder="e.g., Battery testing, Sample preparation, Cleaning equipment"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Notes:</label>
+                        <textarea id="usageNotes" placeholder="Additional details (optional)"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">Record Usage</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- User Details Modal -->
+        <div id="userDetailsModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>👤 User Consumption Details</h2>
+                    <button class="close-btn" onclick="closeModal('userDetailsModal')">&times;</button>
+                </div>
+                <div id="userDetailsContent"></div>
+            </div>
+        </div>
+
+        <!-- Consumable History Modal -->
+        <div id="consumableHistoryModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>📦 Consumable Usage History</h2>
+                    <button class="close-btn" onclick="closeModal('consumableHistoryModal')">&times;</button>
+                </div>
+                <div id="consumableHistoryContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- USERS PAGE -->
+    <div id="users" class="page">
+        <div class="container">
+            <div class="page-header">
+                <h1>👥 User Management</h1>
+                <button class="btn-primary" onclick="openModal('userModal')">+ Add User</button>
+            </div>
+
+            <!-- USER STATS -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Users</h3>
+                    <div class="stat-number" id="totalUsersCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Users</h3>
+                    <div class="stat-number" id="activeUsersCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Departments</h3>
+                    <div class="stat-number" id="departmentsCount">0</div>
+                </div>
+            </div>
+
+            <!-- USERS TABLE -->
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">📋 Registered Users</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Full Name</th>
+                        <th>Department</th>
+                        <th>Email Address</th>
+                        <th>Designation</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTable">
+                    <tr><td colspan="7" class="no-data">No users found</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Add User Modal -->
+        <div id="userModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>➕ Add New User</h2>
+                    <button class="close-btn" onclick="closeModal('userModal')">&times;</button>
+                </div>
+                <form onsubmit="addUser(event)">
+                    <div class="form-group">
+                        <label>Employee ID:</label>
+                        <input type="text" id="empId" required placeholder="e.g., EMP-001">
+                    </div>
+                    <div class="form-group">
+                        <label>Full Name:</label>
+                        <input type="text" id="fullName" required placeholder="e.g., John Scientist">
+                    </div>
+                    <div class="form-group">
+                        <label>Department:</label>
+                        <select id="userDepartment" required>
+                            <option value="">Select Department</option>
+                            <option value="Research & Development">Research & Development</option>
+                            <option value="Testing">Testing</option>
+                            <option value="Quality Control">Quality Control</option>
+                            <option value="Operations">Operations</option>
+                            <option value="Maintenance">Maintenance</option>
+                            <option value="Management">Management</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Designation:</label>
+                        <select id="userDesignation" required>
+                            <option value="">Select Designation</option>
+                            <option value="Senior Scientist">Senior Scientist</option>
+                            <option value="Scientist">Scientist</option>
+                            <option value="Lab Technician">Lab Technician</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Supervisor">Supervisor</option>
+                            <option value="Staff">Staff</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address:</label>
+                        <input type="text" id="userEmail" required readonly placeholder="auto-generated">
+                        <small style="color: #666; margin-top: 0.25rem; display: block;">Email will be auto-generated as: empid@amaraja.com</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Phone:</label>
+                        <input type="tel" id="userPhone" required placeholder="+91-XXXXXXXXXX">
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">Add User</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- User Details Modal -->
+        <div id="userDetailsModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>👤 User Profile</h2>
+                    <button class="close-btn" onclick="closeModal('userDetailsModal')">&times;</button>
+                </div>
+                <div id="userDetailsContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2024 Amara Raja Energy & Mobility Ltd - BEMAL Laboratory | Consumable Tracking System</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
